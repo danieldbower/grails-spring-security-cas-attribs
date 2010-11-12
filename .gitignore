@@ -1,0 +1,7 @@
+*.swp
+.~lock*
+*.*.prod
+target/*
+web-app/WEB-INF/classes/*
+stacktrace.log
+grails-spring-security-cas-attribs*.zip

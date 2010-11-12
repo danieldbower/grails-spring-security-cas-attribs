@@ -1,0 +1,19 @@
+<plugin name='spring-security-cas-attribs' version='1.0.0' grailsVersion='1.2.3 &gt; *'>
+  <author>Daniel Bower</author>
+  <authorEmail>daniel.d.bower@gmail.com</authorEmail>
+  <title>Spring Security Cas with Cas Attribs</title>
+  <description>\
+Allows Grails to obtain authorities directly from CAS.  Also allows grails to create the user's profile in the app if they do not exist.  At this time, ignores local role table.  Someone with more gorm-fu ought to be able to hack it easily to add that type of functionality.
+</description>
+  <documentation>http://grails.org/plugin/spring-security-cas-attribs</documentation>
+  <resources>
+    <resource>BuildConfig</resource>
+    <resource>Config</resource>
+    <resource>DataSource</resource>
+    <resource>UrlMappings</resource>
+  </resources>
+  <dependencies>
+    <plugin name='springSecurityCas' version='1.0 &gt; *' />
+  </dependencies>
+  <behavior />
+</plugin>
