@@ -10,6 +10,10 @@ import org.springframework.security.cas.userdetails.GrantedAuthorityFromAssertio
 import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ *  Allows the Authorities to be brought in from the CAS Assertion
+ * @author Daniel Bower
+ */
 class CasAuthenticationUserDetailsService extends
 	AbstractCasAssertionUserDetailsService {
 			
