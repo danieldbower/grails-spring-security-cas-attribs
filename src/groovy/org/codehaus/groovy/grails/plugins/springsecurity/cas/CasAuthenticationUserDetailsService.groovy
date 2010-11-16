@@ -28,7 +28,12 @@ class CasAuthenticationUserDetailsService extends
 	 * doesn't grant anything.
 	 */
 	private static final List NO_ROLES = [new GrantedAuthorityImpl(SpringSecurityUtils.NO_ROLE)]
-		
+	 
+	/**
+	 * Should we check for and pull apart Authorities that have been concatenated together? - seems to happen in the cas client lib
+	 */
+	Boolean CONCATENATED_AUTHORITIES_CHECK = true
+	                            		
 	private GrantedAuthorityFromAssertionAttributesUserDetailsService grantedAuthoritiesService
 	private def authorityAttribNamesFromCas
 	/** 
@@ -57,8 +62,30 @@ class CasAuthenticationUserDetailsService extends
 		
 		//authorities
 		def casUser = grantedAuthoritiesService.loadUserDetails(casAssert)
-		def casAuthorities = (casUser.authorities)?:NO_ROLES
+		def casAuthorities = [] 
 		
+		casUser.authorities.each{ authBundle ->
+			
+			//check to see if some authorities were concatenated together
+			if(CONCATENATED_AUTHORITIES_CHECK && authBundle.authority.matches(/^\[.*\]$/)){
+				def concattedAuths = authBundle.authority
+				//strip off braces
+				concattedAuths = concattedAuths[1..(concattedAuths.size()-2)]
+
+				//remove commas and add authorities
+				concattedAuths.tokenize(",").each{
+					casAuthorities.add(new GrantedAuthorityImpl(it.stripIndent()))
+				}
+				
+			}else{
+				casAuthorities.add(authBundle)
+			}
+			
+		}
+
+		if (!casAuthorities) casAuthorities=NO_ROLES
+		
+		//return a Grails User with the Username and authorities from cas
 		new GrailsUser(casUser.username, NON_EXISTENT_PASSWORD_VALUE, 
 			true, true, true, true, casAuthorities, user.id)
 	}
