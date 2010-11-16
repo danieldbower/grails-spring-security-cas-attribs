@@ -2,7 +2,7 @@ import org.codehaus.groovy.grails.plugins.springsecurity.cas.CasAuthenticationUs
 
 class SpringSecurityCasAttribsGrailsPlugin {
     // the plugin version
-    String version = '1.0.0'
+    String version = '1.0.1'
 	String grailsVersion = '1.2.3 > *'
     // the other plugins this plugin depends on
     def dependsOn = ['springSecurityCas': '1.0 > *']

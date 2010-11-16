@@ -1,4 +1,4 @@
-<plugin name='spring-security-cas-attribs' version='1.0.0' grailsVersion='1.2.3 &gt; *'>
+<plugin name='spring-security-cas-attribs' version='1.0.1' grailsVersion='1.2.3 &gt; *'>
   <author>Daniel Bower</author>
   <authorEmail>daniel.d.bower@gmail.com</authorEmail>
   <title>Spring Security Cas with Cas Attribs</title>
@@ -11,6 +11,7 @@ Allows Grails to obtain authorities directly from CAS.  Also allows grails to cr
     <resource>Config</resource>
     <resource>DataSource</resource>
     <resource>UrlMappings</resource>
+    <resource>LoginCasController</resource>
   </resources>
   <dependencies>
     <plugin name='springSecurityCas' version='1.0 &gt; *' />
