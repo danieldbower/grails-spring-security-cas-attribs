@@ -33,20 +33,17 @@ class CasAuthenticationUserDetailsService extends
 	Boolean CONCATENATED_AUTHORITIES_CHECK = true
 	                            		
 	private GrantedAuthorityFromAssertionAttributesUserDetailsService grantedAuthoritiesService
-	private def authorityAttribNamesFromCas
 	/** 
 	 * Dependency injection for Getting Authorities from CAS
 	 * Provide the attribute name/s that will contain role information from cas
 	 */
 	public void setAuthorityAttribNamesFromCas(authorityAttribNamesFromCas){
-		this.authorityAttribNamesFromCas = authorityAttribNamesFromCas
-			
 		grantedAuthoritiesService = new GrantedAuthorityFromAssertionAttributesUserDetailsService(
 			authorityAttribNamesFromCas.toArray(new String[authorityAttribNamesFromCas.size()]))
 	}
 		
 	/** Dependency injection for creating and finding Users **/
-	def userMapper
+	DomainUserMapperService userMapper
 	
 	@Override
 	protected UserDetails loadUserDetails(Assertion casAssert) {

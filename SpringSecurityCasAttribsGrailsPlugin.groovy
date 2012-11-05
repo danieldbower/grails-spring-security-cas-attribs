@@ -1,4 +1,6 @@
-import org.codehaus.groovy.grails.plugins.springsecurity.cas.CasAuthenticationUserDetailsService;
+import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import org.codehaus.groovy.grails.plugins.springsecurity.cas.CasAuthenticationUserDetailsService
+import org.codehaus.groovy.grails.plugins.springsecurity.cas.DomainUserMapperService
 
 class SpringSecurityCasAttribsGrailsPlugin {
     // the plugin version
@@ -28,13 +30,20 @@ Allows Grails to obtain authorities directly from CAS.  Also allows grails to cr
     def doWithSpring = {
         // TODO Implement runtime spring config (optional)
 		
-		/*
-		 * replacement authenticationUserDetailsService - overwrites the one in  spring-security-core
-		 */
-		authenticationUserDetailsService(CasAuthenticationUserDetailsService){
-			authorityAttribNamesFromCas = ["authorities"]
-			userMapper = ref('domainUserMapperService')
+		def conf = SpringSecurityUtils.securityConfig
+		
+		if(conf.cas.userAttribsFromCas){
+			domainUserMapperService(DomainUserMapperService)
+			
+			/*
+			 * replacement authenticationUserDetailsService - overwrites the one in  spring-security-core
+			 */
+			authenticationUserDetailsService(CasAuthenticationUserDetailsService){
+				authorityAttribNamesFromCas = conf.cas.authorityAttribNamesFromCas
+				userMapper = ref('domainUserMapperService')
+			}
 		}
+		
     }
 
     def doWithDynamicMethods = { ctx ->
