@@ -18,26 +18,23 @@ class DomainUserMapperService {
 	
 	static transactional = true
 	
-    /**
-	 * Create and save a new domain user when the user has not previously visited the app.
-	 * <br>You could choose to throw a UsernameNotFoundException if you would rather the
-	 * user not be created.  This should drop the user to the App's login form with an error message 
+	/**
+	 * Create and save a new domain user when the user has not previously visited the app. 
 	 */
 	Object newUser(String username, AttributePrincipal principal){
-		def conf = SpringSecurityUtils.securityConfig
-		
 		Class<?> UserClass = getUserClass()
 		
 		def userModel
 		
 		//map actual values to properties:
-		if(conf.cas.customUserMapping){
-			//if they have implemented a constructor which accepts an AttributePrincipal
-			Constructor<?> constructor = getUserClass().getConstructor(AttributePrincipal)
+		Constructor<?> constructor
+		try{
+			// see if implemented a constructor which accepts an AttributePrincipal
+			constructor = getUserClass().getConstructor([AttributePrincipal] as Class[])
 			userModel = constructor.newInstance(principal)
-		}else{
+		}catch(NoSuchMethodException nsme){
 			//if they use the same names in cas as in the user model
-			Constructor<?> constructor = getUserClass().getConstructor(Map)
+			constructor = getUserClass().getConstructor([Map] as Class[])
 			userModel = constructor.newInstance(principal.getAttributes())
 		}
 		
@@ -63,7 +60,7 @@ class DomainUserMapperService {
 	}
 	
 	/**
-	 * Tell the security mechanism where to find your user profiles
+	 * Where to find user profiles
 	 */
 	Object findUserByUsername(String username){
 		def conf = SpringSecurityUtils.securityConfig
