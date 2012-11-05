@@ -18,6 +18,7 @@ grails.project.dependency.resolution = {
         // runtime 'mysql:mysql-connector-java:5.1.5'
     }
 	plugins {
+		build ':release:2.0.3'
 		compile ':spring-security-cas:1.0.5'
 		
 		runtime(":hibernate:$grailsVersion") {
