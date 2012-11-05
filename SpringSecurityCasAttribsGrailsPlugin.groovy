@@ -17,7 +17,9 @@ class SpringSecurityCasAttribsGrailsPlugin {
     def authorEmail = "daniel.d.bower@gmail.com"
     def title = "Spring Security Cas with Cas Attribs"
     def description = '''\\
-Allows Grails to obtain authorities directly from CAS.  Also allows grails to create the user's profile in the app if they do not exist.  At this time, ignores local role table.  Someone with more gorm-fu ought to be able to hack it easily to add that type of functionality.
+Allows Grails to obtain authorities directly from CAS.  
+Also allows grails to create the user's profile from attributes in CAS in the app if they do not already exist.  
+At this time, ignores local role table.
 '''
 
     // URL to the plugin's documentation
@@ -29,12 +31,12 @@ Allows Grails to obtain authorities directly from CAS.  Also allows grails to cr
 
     def doWithSpring = {
         // TODO Implement runtime spring config (optional)
-		
+
 		def conf = SpringSecurityUtils.securityConfig
-		
+
 		if(conf.cas.userAttribsFromCas){
 			domainUserMapperService(DomainUserMapperService)
-			
+
 			/*
 			 * replacement authenticationUserDetailsService - overwrites the one in  spring-security-core
 			 */
@@ -43,7 +45,7 @@ Allows Grails to obtain authorities directly from CAS.  Also allows grails to cr
 				userMapper = ref('domainUserMapperService')
 			}
 		}
-		
+
     }
 
     def doWithDynamicMethods = { ctx ->
