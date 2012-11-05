@@ -1,14 +1,12 @@
 package org.codehaus.groovy.grails.plugins.springsecurity.cas
 
-import java.util.List;
-
-import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser;
-import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils;
-import org.jasig.cas.client.validation.Assertion;
-import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService;
-import org.springframework.security.cas.userdetails.GrantedAuthorityFromAssertionAttributesUserDetailsService;
-import org.springframework.security.core.authority.GrantedAuthorityImpl;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.codehaus.groovy.grails.plugins.springsecurity.GrailsUser
+import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
+import org.jasig.cas.client.validation.Assertion
+import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService
+import org.springframework.security.cas.userdetails.GrantedAuthorityFromAssertionAttributesUserDetailsService
+import org.springframework.security.core.authority.GrantedAuthorityImpl
+import org.springframework.security.core.userdetails.UserDetails
 
 /**
  *  Allows the Authorities to be brought in from the CAS Assertion

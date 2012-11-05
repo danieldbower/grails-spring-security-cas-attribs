@@ -7,7 +7,7 @@ import org.jasig.cas.client.authentication.AttributePrincipal;
  * Domain model instantiation logic from the security model
  * @author Daniel Bower
  */
-public interface DomainUserMapper {
+interface DomainUserMapper {
 	/**
 	 * Create and save a new domain user when the user has not previously visited the app.
 	 * <br>You could choose to throw a UsernameNotFoundException if you would rather the
