@@ -5,3 +5,4 @@ target
 target-eclipse
 stacktrace.log
 grails-spring-security-cas-attribs*.zip
+grails-spring-security-cas-attribs*.sha1

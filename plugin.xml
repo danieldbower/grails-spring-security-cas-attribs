@@ -1,0 +1,33 @@
+<plugin name='spring-security-cas-attribs' version='1.1.0' grailsVersion='1.2.3 &gt; *'>
+  <author>Daniel Bower</author>
+  <authorEmail>daniel.d.bower@gmail.com</authorEmail>
+  <title>Spring Security Cas with Cas Attribs</title>
+  <description>\
+Allows Grails to obtain authorities directly from CAS.  
+Also allows grails to create the user's profile from attributes in CAS in the app if they do not already exist.  
+At this time, ignores local role table.
+</description>
+  <documentation>http://grails.org/plugin/spring-security-cas-attribs</documentation>
+  <type>SpringSecurityCasAttribsGrailsPlugin</type>
+  <resources>
+    <resource>LoginCasController</resource>
+  </resources>
+  <repositories>
+    <repository name='grailsCentral' url='http://grails.org/plugins' />
+    <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
+    <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+  </repositories>
+  <dependencies />
+  <plugins>
+    <compile>
+      <plugin group='org.grails.plugins' name='spring-security-cas' version='1.0.5' />
+    </compile>
+    <build>
+      <plugin group='org.grails.plugins' name='release' version='2.0.3' />
+    </build>
+  </plugins>
+  <runtimePluginRequirements>
+    <plugin name='springSecurityCas' version='1.0 &gt; *' />
+  </runtimePluginRequirements>
+  <behavior />
+</plugin>
