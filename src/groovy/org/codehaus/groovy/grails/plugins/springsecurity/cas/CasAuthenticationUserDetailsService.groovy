@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails
 
 /**
  *  Allows the Authorities to be brought in from the CAS Assertion
- * @author Daniel Bower
+ * @author daniel.d.bower
  */
 class CasAuthenticationUserDetailsService extends
 	AbstractCasAssertionUserDetailsService {

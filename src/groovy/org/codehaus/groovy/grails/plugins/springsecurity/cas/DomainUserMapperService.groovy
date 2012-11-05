@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
 /**
  * The User mapper is implemented to abstract out the
  * Domain model instantiation logic from the security model
- * @author Daniel Bower
+ * @author daniel.d.bower
  */
 class DomainUserMapperService {
 
