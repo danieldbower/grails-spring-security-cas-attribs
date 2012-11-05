@@ -9,17 +9,9 @@
 //    ant.mkdir(dir:"${basedir}/grails-app/jobs")
 //
 
-ant.copy(file:"${pluginBasedir}/src/groovy/org/codehaus/groovy/grails/plugins/springsecurity/cas/samples/DomainUserMapperService.txt", tofile:"${basedir}/grails-app/services/DomainUserMapperService.groovy")
-
 println """
 *******************************************************
 * You've installed the Spring Security Cas Attribs plugin.
-*
-* You MUST edit:
-* ${basedir}/grails-app/services/DomainUserMapperService.groovy 
-* with correct values, or your app will not compile
-* You will need to tell it what properties to map from 
-* CAS, as well as the Class of your User Profiles.
 *
 *******************************************************
 """
