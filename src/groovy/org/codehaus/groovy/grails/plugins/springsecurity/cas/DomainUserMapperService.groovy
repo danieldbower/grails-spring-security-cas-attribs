@@ -41,8 +41,8 @@ class DomainUserMapperService {
 		Constructor<?> constructor
 		try{
 			// see if implemented a constructor which accepts an AttributePrincipal
-			constructor = getUserClass().getConstructor([AttributePrincipal] as Class[])
-			userModel = constructor.newInstance(principal)
+			constructor = getUserClass().getConstructor([String, AttributePrincipal] as Class[])
+			userModel = constructor.newInstance(username, principal)
 		}catch(NoSuchMethodException nsme){
 			//if they use the same names in cas as in the user model
 			Map userAttribs = [(getConf().userLookup.usernamePropertyName):principal.name] 

@@ -20,8 +20,8 @@ At this time, ignores local role table.
   </repositories>
   <dependencies>
     <compile>
-      <dependency group='org.apache.santuario' name='xmlsec' version='1.5.2' />
       <dependency group='opensaml' name='opensaml' version='1.1b' />
+      <dependency group='org.apache.santuario' name='xmlsec' version='1.5.2' />
     </compile>
   </dependencies>
   <plugins>
