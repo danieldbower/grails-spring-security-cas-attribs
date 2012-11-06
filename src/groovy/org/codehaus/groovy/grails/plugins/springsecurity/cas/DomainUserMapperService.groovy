@@ -5,6 +5,7 @@ import java.lang.reflect.Constructor
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.jasig.cas.client.authentication.AttributePrincipal
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 
 /**
@@ -14,9 +15,19 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException
  */
 class DomainUserMapperService {
 
+	@Autowired
 	GrailsApplication grailsApplication
 	
 	static transactional = true
+	
+	private Object conf
+	
+	private Object getConf(){
+		if(!conf){
+			conf = SpringSecurityUtils.securityConfig
+		}
+		return conf
+	}
 	
 	/**
 	 * Create and save a new domain user when the user has not previously visited the app. 
@@ -25,7 +36,7 @@ class DomainUserMapperService {
 		Class<?> UserClass = getUserClass()
 		
 		def userModel
-		
+	
 		//map actual values to properties:
 		Constructor<?> constructor
 		try{
@@ -34,12 +45,18 @@ class DomainUserMapperService {
 			userModel = constructor.newInstance(principal)
 		}catch(NoSuchMethodException nsme){
 			//if they use the same names in cas as in the user model
+			Map userAttribs = [(getConf().userLookup.usernamePropertyName):principal.name] 
+			userAttribs << principal.getAttributes()
 			constructor = getUserClass().getConstructor([Map] as Class[])
-			userModel = constructor.newInstance(principal.getAttributes())
+			userModel = constructor.newInstance(userAttribs)
 		}
 		
 		try{
-			userModel.save()
+			UserClass.withTransaction { status ->
+				if(!userModel.save(flush: true)){
+					throw new Exception(userModel.errors.toString())
+				}
+			}
 		}catch(Exception e){
 			throw new Exception("Unable to create and save user to the database", e)
 		}
@@ -48,8 +65,7 @@ class DomainUserMapperService {
 	}
 	
 	private Class<?> getUserClass(){
-		def conf = SpringSecurityUtils.securityConfig
-		String userClassName = conf.userLookup.userDomainClassName
+		String userClassName = getConf().userLookup.userDomainClassName
 		def dc = grailsApplication.getDomainClass(userClassName)
 		if (!dc) {
 			throw new RuntimeException("The specified user domain class '$userClassName' is not a domain class")
@@ -63,19 +79,12 @@ class DomainUserMapperService {
 	 * Where to find user profiles
 	 */
 	Object findUserByUsername(String username){
-		def conf = SpringSecurityUtils.securityConfig
-		
 		Class<?> UserClass = getUserClass()
 		
 		def userModel
 		
 		UserClass.withTransaction { status ->
-			userModel = UserClass.findWhere((conf.userLookup.usernamePropertyName): username)
-			
-			if (!userModel) {
-			log.warn "User not found: $username"
-			throw new UsernameNotFoundException('User not found', username)
-			}
+			userModel = UserClass.findWhere((getConf().userLookup.usernamePropertyName): username)
 		}
 		
 		return userModel
