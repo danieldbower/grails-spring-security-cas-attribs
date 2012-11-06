@@ -11,11 +11,13 @@ grails.project.dependency.resolution = {
         grailsCentral()
         mavenLocal()
         mavenCentral()
+		mavenRepo "https://repository.jboss.org/nexus/content/repositories/thirdparty-releases"
     }
     dependencies {
         // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes eg.
 
         // runtime 'mysql:mysql-connector-java:5.1.5'
+		compile 'opensaml:opensaml:1.1b', 'org.apache.santuario:xmlsec:1.5.2'
     }
 	plugins {
 		build ':release:2.0.3'

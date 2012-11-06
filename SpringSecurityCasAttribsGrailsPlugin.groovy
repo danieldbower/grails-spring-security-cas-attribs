@@ -1,6 +1,8 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.codehaus.groovy.grails.plugins.springsecurity.cas.CasAuthenticationUserDetailsService
 import org.codehaus.groovy.grails.plugins.springsecurity.cas.DomainUserMapperService
+import org.jasig.cas.client.proxy.Cas20ProxyRetriever
+import org.jasig.cas.client.validation.Saml11TicketValidator
 
 class SpringSecurityCasAttribsGrailsPlugin {
     // the plugin version
@@ -35,6 +37,10 @@ At this time, ignores local role table.
 		def conf = SpringSecurityUtils.securityConfig
 
 		if(conf.cas.userAttribsFromCas){
+			casTicketValidator(Saml11TicketValidator, conf.cas.serverUrlPrefix) {
+				renew = conf.cas.sendRenew // false
+			}
+			
 			domainUserMapperService(DomainUserMapperService)
 
 			/*

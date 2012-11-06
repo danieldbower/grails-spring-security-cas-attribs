@@ -16,8 +16,14 @@ At this time, ignores local role table.
     <repository name='grailsCentral' url='http://grails.org/plugins' />
     <repository name='http://repo.grails.org/grails/core' url='http://repo.grails.org/grails/core/' />
     <repository name='mavenCentral' url='http://repo1.maven.org/maven2/' />
+    <repository name='https://repository.jboss.org/nexus/content/repositories/thirdparty-releases' url='https://repository.jboss.org/nexus/content/repositories/thirdparty-releases/' />
   </repositories>
-  <dependencies />
+  <dependencies>
+    <compile>
+      <dependency group='org.apache.santuario' name='xmlsec' version='1.5.2' />
+      <dependency group='opensaml' name='opensaml' version='1.1b' />
+    </compile>
+  </dependencies>
   <plugins>
     <compile>
       <plugin group='org.grails.plugins' name='spring-security-cas' version='1.0.5' />
