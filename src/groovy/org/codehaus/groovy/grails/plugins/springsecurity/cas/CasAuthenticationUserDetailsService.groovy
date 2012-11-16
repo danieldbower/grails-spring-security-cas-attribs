@@ -5,6 +5,7 @@ import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.jasig.cas.client.validation.Assertion
 import org.springframework.security.cas.userdetails.AbstractCasAssertionUserDetailsService
 import org.springframework.security.cas.userdetails.GrantedAuthorityFromAssertionAttributesUserDetailsService
+import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.GrantedAuthorityImpl
 import org.springframework.security.core.userdetails.UserDetails
 
@@ -14,12 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails
  */
 class CasAuthenticationUserDetailsService extends
 	AbstractCasAssertionUserDetailsService {
-			
-	 /**
-	   * When using cas, the password attribute of the User object means nothing.
-	   */
-	private static final String NON_EXISTENT_PASSWORD_VALUE = "NO_PASSWORD";
-		
+	
 	/**
 	 * Some Spring Security classes (e.g. RoleHierarchyVoter) expect at least one role, so
 	 * we give a user with no granted roles this one which gets past that restriction but
@@ -44,6 +40,9 @@ class CasAuthenticationUserDetailsService extends
 		
 	/** Dependency injection for creating and finding Users **/
 	DomainUserMapperService userMapper
+	
+	/** Dependency injection for creating userDetails objects **/
+	UserDetailsFromDomainClassFactory userDetailsFromDomainClassFactory
 	
 	@Override
 	protected UserDetails loadUserDetails(Assertion casAssert) {
@@ -80,9 +79,7 @@ class CasAuthenticationUserDetailsService extends
 
 		if (!casAuthorities) casAuthorities=NO_ROLES
 		
-		//return a Grails User with the Username and authorities from cas
-		new GrailsUser(casUser.username, NON_EXISTENT_PASSWORD_VALUE, 
-			true, true, true, true, casAuthorities, user.id)
+		return userDetailsFromDomainClassFactory.createUserDetails(user, casAuthorities)
 	}
 
 }

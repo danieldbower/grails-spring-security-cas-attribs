@@ -1,12 +1,12 @@
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.codehaus.groovy.grails.plugins.springsecurity.cas.CasAuthenticationUserDetailsService
+import org.codehaus.groovy.grails.plugins.springsecurity.cas.DefaultUserDetailsFromDomainClassFactory
 import org.codehaus.groovy.grails.plugins.springsecurity.cas.DomainUserMapperService
-import org.jasig.cas.client.proxy.Cas20ProxyRetriever
 import org.jasig.cas.client.validation.Saml11TicketValidator
 
 class SpringSecurityCasAttribsGrailsPlugin {
     // the plugin version
-    String version = '1.1.0'
+    String version = '1.1.1'
 	String grailsVersion = '1.2.3 > *'
     // the other plugins this plugin depends on
     def dependsOn = ['springSecurityCas': '1.0 > *']
@@ -42,6 +42,8 @@ At this time, ignores local role table.
 			}
 			
 			domainUserMapperService(DomainUserMapperService)
+			
+			userDetailsFromDomainClassFactory(DefaultUserDetailsFromDomainClassFactory)
 
 			/*
 			 * replacement authenticationUserDetailsService - overwrites the one in  spring-security-core
@@ -49,6 +51,7 @@ At this time, ignores local role table.
 			authenticationUserDetailsService(CasAuthenticationUserDetailsService){
 				authorityAttribNamesFromCas = conf.cas.authorityAttribNamesFromCas
 				userMapper = ref('domainUserMapperService')
+				userDetailsFromDomainClassFactory = ref('userDetailsFromDomainClassFactory')
 			}
 		}
 
