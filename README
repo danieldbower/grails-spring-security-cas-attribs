@@ -1,3 +1,19 @@
-View http://bowerstudios.com/node/674 for install information and details about Grails spring-security-cas-attribs
+Basics:
+CAS must be configured to expose the SAML protocol
 
-If you use/fork, I'd love to know about it :-)
+Install spring-security-core, spring-security-cas, and this plugin
+
+Minimum parameters in Config.groovy:
+grails.plugins.springsecurity.cas.loginUri = '/login'
+grails.plugins.springsecurity.cas.serviceUrl = 'http://localhost:8080/myapp/j_spring_cas_security_check'
+grails.plugins.springsecurity.cas.serverUrlPrefix = 'https://localhost/cas'
+grails.plugins.springsecurity.cas.userAttribsFromCas = true
+grails.plugins.springsecurity.cas.authorityAttribNamesFromCas = ['groupMembership']
+grails.plugins.springsecurity.userLookup.userDomainClassName = 'com.mypackage.myapp.MyPersonClass'
+
+To customize what GrailsUser object is generated, implement UserDetailsFromDomainClassFactory, and add to resources.groovy:
+beans = {
+	userDetailsFromDomainClassFactory(MyCustomUserDetailsFromDomainClassFactory)
+}
+
+More info at: https://bowerstudios.com/node/674 and https://bowerstudios.com/node/1044
