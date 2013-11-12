@@ -8,7 +8,9 @@ class SpringSecurityCasAttribsGrailsPlugin {
 	String version = '1.1.1'
 	String grailsVersion = '1.2.3 > *'
 	def dependsOn = ['springSecurityCas': '1.0 > *']
-
+	def pluginExcludes = [
+		'web-app/**'
+	]
 	def author = "Daniel Bower"
 	def authorEmail = "daniel.d.bower@gmail.com"
 	def title = "Spring Security Cas with Cas Attribs"

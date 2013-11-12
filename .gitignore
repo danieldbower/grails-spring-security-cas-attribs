@@ -7,3 +7,4 @@ target-eclipse
 grails-spring-security-cas-attribs*.zip
 grails-spring-security-cas-attribs*.sha1
 plugin.xml
+web-app
