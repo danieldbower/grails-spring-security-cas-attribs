@@ -6,6 +6,7 @@ import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.plugins.springsecurity.SpringSecurityUtils
 import org.jasig.cas.client.authentication.AttributePrincipal
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.transaction.annotation.Transactional
 
 /**
  * The User mapper is implemented to abstract out the
@@ -16,8 +17,6 @@ class DomainUserMapperService {
 
 	@Autowired
 	GrailsApplication grailsApplication
-
-	static transactional = true
 
 	private Object conf
 
@@ -31,6 +30,7 @@ class DomainUserMapperService {
 	/**
 	 * Create and save a new domain user when the user has not previously visited the app.
 	 */
+	@Transactional
 	Object newUser(String username, AttributePrincipal principal){
 		Class<?> UserClass = getUserClass()
 
