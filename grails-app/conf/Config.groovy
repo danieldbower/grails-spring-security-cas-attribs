@@ -7,3 +7,5 @@ grails.plugins.springsecurity.cas.serverUrlPrefix = 'http://localhost:9090/cas-s
 
 grails.plugins.springsecurity.cas.userAttribsFromCas = true
 grails.plugins.springsecurity.cas.authorityAttribNamesFromCas = ['authorities']
+
+
